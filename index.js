@@ -5,6 +5,8 @@ import cors from 'cors';
 import ejs from 'ejs';
 import authRoutes from './routes/authRoutes.js';
 import medicineRoutes from './routes/medicineRoutes.js';
+import saleRoutes from './routes/SalesRoutes.js';
+import purchaseRoutes from './routes/purchaseRoutes.js';
 
 // load environment variables
 dotenv.config();
@@ -24,6 +26,8 @@ mongoose.connect(process.env.MONGO_URI)
 // routes
 app.use('/api/auth', authRoutes);
 app.use('/api/medicines', medicineRoutes);
+app.use('/api/sales', saleRoutes);
+app.use('/api/purchases', purchaseRoutes);
 app.get('/', (req, res) => {
     res.send('Wlcome to the Pharmacy Management System!');
 });
