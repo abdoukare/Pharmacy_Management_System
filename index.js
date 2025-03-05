@@ -7,6 +7,7 @@ import authRoutes from './routes/authRoutes.js';
 import medicineRoutes from './routes/medicineRoutes.js';
 import saleRoutes from './routes/SalesRoutes.js';
 import purchaseRoutes from './routes/purchaseRoutes.js';
+import Medicine from './models/Medicine.js';
 
 // load environment variables
 dotenv.config();

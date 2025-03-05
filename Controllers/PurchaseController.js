@@ -5,7 +5,12 @@ import Medicine from "../models/Medicine.js";
 
 export const recordpurchase = async (req, res) =>{
 	try{
-		const {medId, quantity, totalPrice} = req.body;
+		const {medId, quantity, totalPrice, purchaseDate} = req.body;
+
+		// validate required fields
+		if(!medId || !quantity || !totalPrice){
+			return res.status(400).json({error: 'missing required fields'});
+		}
 
 		// find the medicine
 		const medicine = await Medicine.findById(medId);
@@ -17,7 +22,7 @@ export const recordpurchase = async (req, res) =>{
 		await medicine.save();
 
 		// Recording the purchase 
-		const purchase = new Purchase({medId, quantity, totalPrice});
+		const purchase = new Purchase({medId, quantity, totalPrice, purchaseDate});
 		await purchase.save()
 		res.status(201).json(purchase);
 	}
@@ -28,7 +33,7 @@ export const recordpurchase = async (req, res) =>{
 // Fetch all purchases
 export const getPurchases = async (req, res) => {
     try {
-        const purchases = await Purchase.find().populate('medicineId');
+        const purchases = await Purchase.find().populate('medId');// maybe the fault is here 
         res.json(purchases);
     } catch (err) {
         res.status(500).json({ error: err.message });
