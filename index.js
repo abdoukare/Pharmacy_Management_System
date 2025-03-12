@@ -21,9 +21,17 @@ app.use(cors()); // to allow cross origin requests
 app.use(express.json()); // parse json data
 
 // connect to mongodb
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('Connected to MongoDB'))
-    .catch((err) => console.error('MongoDB connection error:', err));
+async function mongo() {
+    try {
+      await mongoose.connect(process.env.MONGO_URI);
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error.message);
+    }   
+    }
+  
+    mongo();
+    console.log(process.env.MONGO_URI);
 
 // routes
 app.use('/api/auth', authRoutes);
