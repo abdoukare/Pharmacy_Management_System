@@ -8,6 +8,7 @@ import medicineRoutes from './routes/medicineRoutes.js';
 import saleRoutes from './routes/SalesRoutes.js';
 import purchaseRoutes from './routes/purchaseRoutes.js';
 import Medicine from './models/Medicine.js';
+import reportRoutes from './routes/reportRoutes.js';
 
 // load environment variables
 dotenv.config();
@@ -29,6 +30,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/medicines', medicineRoutes);
 app.use('/api/sales', saleRoutes);
 app.use('/api/purchases', purchaseRoutes);
+app.use('/api/reports', reportRoutes);
 app.get('/', (req, res) => {
     res.send('Wlcome to the Pharmacy Management System!');
 });

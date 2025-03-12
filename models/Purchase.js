@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const purchaseSchema = new mongoose.Schema({
-	medId: {type:mongoose.Schema.Types.ObjectId, ref: 'Medicine', required: true},
+	medicineId: {type:mongoose.Schema.Types.ObjectId, ref: 'Medicine', required: true},
 	quantity: {type: Number, required: true},
 	totalPrice: {type: Number, required:true},
 	date: {type: Date, required: true},
