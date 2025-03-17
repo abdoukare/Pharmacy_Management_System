@@ -5,24 +5,35 @@ import Medicine from "../models/Medicine.js";
 
 export const recordpurchase = async (req, res) =>{
 	try{
-		const {medId, quantity, totalPrice, purchaseDate} = req.body;
+		const {medicineId, quantity, price, purchaseDate, category} = req.body;
 
 		// validate required fields
-		if(!medId || !quantity || !totalPrice){
+		if(!medicineId || !quantity || !price || !category){
 			return res.status(400).json({error: 'missing required fields'});
 		}
 
-		// find the medicine
-		const medicine = await Medicine.findById(medId);
-		if(!medId){
-			return res.status(404).json({error:'medicine not found'});
-		}
+		   // find the medicine
+		   let medicine = await Medicine.findById(medicineId);
+		   if (!medicine) {
+			   // If medicine doesn't exist, create a new one
+			   medicine = new Medicine({
+				   _id: medicineId,
+				   category,
+				   quantity: 0,  // Will be updated below
+				   price,
+				   status: 'in stock'
+			   });
+		   }
 		// ubdating the medicine quantity 
 		medicine.quantity += quantity;
 		await medicine.save();
 
 		// Recording the purchase 
-		const purchase = new Purchase({medId, quantity, totalPrice, purchaseDate});
+		const purchase = new Purchase({medicineId,
+			 quantity,
+			  price,
+			   purchaseDate: purchaseDate || new Date()
+			});
 		await purchase.save()
 		res.status(201).json(purchase);
 	}

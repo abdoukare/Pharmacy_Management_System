@@ -4,10 +4,14 @@ import Sales from '../models/Sales.js';
 // Record a sale 
 export const recordSale = async (req, res) => {
     try {
-        const { medId, quantity, totalPrice } = req.body;
+        const { medicineId, quantity, totalPrice } = req.body;
 
+		// Validate required fields
+        if (!medicineId || !quantity || !totalPrice) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
         // find the medicine 
-        const medicine = await Medicine.findById(medId);
+        const medicine = await Medicine.findById(medicineId);
         if (!medicine) {
             return res.status(404).json({ error: 'Medicine not found' });
         }
@@ -21,8 +25,13 @@ export const recordSale = async (req, res) => {
         medicine.quantity -= quantity;
         await medicine.save();
 
-        // Record the sale 
-        const sale = new Sales({ medId, quantity, totalPrice });
+         // Record the sale 
+		 const sale = new Sales({ 
+            medicineId,  // Changed from medId to medicineId
+            quantity, 
+            totalPrice,
+            date: new Date() // Added required date field
+        });
         await sale.save();
         res.status(201).json(sale);
     } catch (error) {

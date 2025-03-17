@@ -6,7 +6,7 @@ import {
 
 const router = express.Router();
 
-router.get('/sales/daily', getDailySales);
-router.get('/inventory/low-stock', getLowStockMedicines);
+router.get('/daily-sales', getDailySales);
+router.get('/low-stock-medicines', getLowStockMedicines);
 
 export default router;
