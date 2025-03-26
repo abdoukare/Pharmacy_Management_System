@@ -18,26 +18,41 @@ router.post('/', async(req, res) => {
 router.get('/', async(req, res) => {
     try{
         const medicines = await Medicine.find();
-        res.json(medicines);
+        const updatedMedicines = medicines.map(medicine => {
+            medicine.status = medicine.calculateStatus();
+            return medicine
+        })
+        await Promise.all(updatedMedicines.map(medicine => medicine.save()));
+        res.json(updatedMedicines);
     }catch(err){
         res.status(500).json({error: err.message});
     }
 });
 
 // update a medicine
-router.put('/:id', async(req, res) =>{
+router.put('/', async(req, res) =>{
     try{
-        const medicine = await Medicine.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        res.json(medicine);
+       const { id, ...updateData } = req.body;
+       const medicine = await Medicine.findById(id);
+
+       if (!medicine) {
+         return res.status(404).json({ error: "Medicine not found" });
+       }
+
+       Object.assign(medicine, updateData);
+       await medicine.save();
+       
+       res.json(medicine);
     }catch(err){
         res.status(500).json({error: err.message});
     }
 });
 
 // delete a medicine
-router.delete('/:id', async(req, res) => {
+router.delete('/', async(req, res) => {
     try{
-        await Medicine.findByIdAndRemove(req.params.id);
+        const { id } = req.body
+        await Medicine.findByIdAndDelete(id);
         res.json({message: 'Medicine deleted successfully'});
     }catch(err){
         res.status(500).json({error: err.message});

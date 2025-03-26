@@ -1,17 +1,23 @@
 {
   "name": "pharmacy-back-end",
   "version": "1.0.0",
+  "description": "Backend API for Pharmacy Management System",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "nodemon index.js",
-	"dev": "nodemon index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "pharmacy",
+    "management",
+    "api",
+    "express",
+    "mongodb"
+  ],
+  "author": "abdou kadj",
+  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -24,6 +30,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/express": "^5.0.0"
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9"
   }
 }
