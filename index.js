@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import ejs from 'ejs';
+import errorMiddleware from './middlewares/error.js';
 import authRoutes from './routes/authRoutes.js';
 import medicineRoutes from './routes/medicineRoutes.js';
 import saleRoutes from './routes/SalesRoutes.js';
@@ -42,6 +43,7 @@ app.use('/api/reports', reportRoutes);
 app.get('/', (req, res) => {
     res.send('Wlcome to the Pharmacy Management System!');
 });
+app.use(errorMiddleware);
 
 
 // start server
