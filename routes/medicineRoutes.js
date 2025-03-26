@@ -49,9 +49,10 @@ router.put('/', async(req, res) =>{
 });
 
 // delete a medicine
-router.delete('/:id', async(req, res) => {
+router.delete('/', async(req, res) => {
     try{
-        await Medicine.findByIdAndRemove(req.params.id);
+        const { id } = req.body
+        await Medicine.findByIdAndDelete(id);
         res.json({message: 'Medicine deleted successfully'});
     }catch(err){
         res.status(500).json({error: err.message});
